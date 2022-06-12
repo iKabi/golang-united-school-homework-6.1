@@ -114,20 +114,20 @@ func (b *box) RemoveAllCircles() (err error) {
 		return
 	}
 
-	var flag bool
-	for k, v := range b.shapes {
+	flag, s := false, make([]Shape, 0, len(b.shapes))
+	for _, v := range b.shapes {
 		switch v.(type) {
 		case *Circle:
 			flag = true
-			if k < len(b.shapes) {
-				_, err = b.ExtractByIndex(k)
-			} else {
-				b.shapes = b.shapes[:k-1]
-			}
+		default:
+			s = append(s, v)
 		}
 	}
+	
 	if !flag {
 		err = fmt.Errorf("%w", NoCircleFoundErr)
+	} else {
+		b.shapes = s
 	}
 	return
 }

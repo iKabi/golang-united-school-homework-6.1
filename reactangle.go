@@ -13,7 +13,7 @@ func (r *Rectangle) CalcPerimeter() float64 {
 	if !r.isRect() {
 		return 0
 	}
-	return 2 * (r.Height + r.Height)
+	return 2 * (r.Height + r.Weight)
 }
 
 func (r *Rectangle) CalcArea() float64 {
