@@ -23,5 +23,5 @@ func (t *Triangle) CalcArea() float64 {
 	if !t.hasSide() {
 		return 0
 	}
-	return math.Sqrt(3) / math.Pow(t.Side, 2) / 4
+	return math.Sqrt(3) * math.Pow(t.Side, 2) / 4
 }
