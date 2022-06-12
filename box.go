@@ -37,7 +37,7 @@ func (b *box) AddShape(shape Shape) error {
 		return fmt.Errorf("%w", nilBoxErr)
 	}
 
-	if b.shapesCapacity < len(b.shapes) {
+	if b.shapesCapacity <= len(b.shapes) {
 		return fmt.Errorf("%w", outOfBoudsErr)
 	}
 
