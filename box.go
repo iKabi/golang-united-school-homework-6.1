@@ -12,8 +12,8 @@ type box struct {
 }
 
 var (
-	nilBoxErr     = errors.New("nil box")
-	outOfBoudsErr = errors.New("index out of bounds")
+	nilBoxErr        = errors.New("nil box")
+	outOfBoudsErr    = errors.New("index out of bounds")
 	NoCircleFoundErr = errors.New("no circles in the box")
 )
 
@@ -70,38 +70,54 @@ func (b *box) GetByIndex(i int) (Shape, error) {
 // ExtractByIndex allows getting shape by index and removes this shape from the list.
 // whether shape by index doesn't exist or index went out of the range, then it returns an error
 func (b *box) ExtractByIndex(i int) (s Shape, err error) {
+
 	s, err = b.GetByIndex(i)
+
 	if nil != err {
 		return
 	}
-	b.shapes = append(b.shapes[:i], b.shapes[i+1:]...)
+
+	end := len(b.shapes) - 1
+	if i < end {
+		b.shapes[i] = b.shapes[end]
+	}
+	b.shapes = b.shapes[:end]
+
 	return
 }
 
 // ReplaceByIndex allows replacing shape by index and returns removed shape.
 // whether shape by index doesn't exist or index went out of the range, then it returns an error
 func (b *box) ReplaceByIndex(i int, new Shape) (old Shape, err error) {
+
 	old, err = b.GetByIndex(i)
+
 	if nil != err {
 		return
 	}
+
 	old, b.shapes[i] = b.shapes[i], new
+
 	return
 }
 
 // SumPerimeter provides sum perimeter of all shapes in the list.
 func (b *box) SumPerimeter() (s float64) {
+
 	for _, v := range b.shapes {
 		s += v.CalcPerimeter()
 	}
+
 	return
 }
 
 // SumArea provides sum area of all shapes in the list.
 func (b *box) SumArea() (s float64) {
+
 	for _, v := range b.shapes {
 		s += v.CalcArea()
 	}
+
 	return
 }
 
@@ -123,11 +139,12 @@ func (b *box) RemoveAllCircles() (err error) {
 			s = append(s, v)
 		}
 	}
-	
+
 	if !flag {
 		err = fmt.Errorf("%w", NoCircleFoundErr)
 	} else {
 		b.shapes = s
 	}
+
 	return
 }
